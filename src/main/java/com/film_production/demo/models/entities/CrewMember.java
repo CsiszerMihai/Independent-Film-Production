@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table
+@Table(name = "crew_members")
 public class CrewMember {
 
     @Id
@@ -23,6 +23,6 @@ public class CrewMember {
     private String phoneNumber;
     @Column(name = "availability")
     private Boolean availability;
-    @Column(name = "film_production")
-    private FilmProduction filmProduction;
+//    @Column(name = "film_production")
+//    private FilmProduction filmProduction;
 }

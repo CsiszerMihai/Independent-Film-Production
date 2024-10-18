@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table
+@Table(name = "script_versions")
 public class ScriptVersion {
 
     @Id
@@ -19,8 +19,8 @@ public class ScriptVersion {
     private Integer versionNumber;
     @Column(name = "updated_at")
     private Date updatedAt;
-    @Column(name = "script")
-    private Script script;
+//    @Column(name = "script")
+//    private Script script;
     @Column(name = "author")
     private String author;
 }

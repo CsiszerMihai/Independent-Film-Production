@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "film_production")
+@Table(name = "film_productions")
 public class FilmProduction {
 
     @Id
@@ -28,10 +28,10 @@ public class FilmProduction {
     private String director;
     @Column(name = "budget")
     private Double budget;
-    @Column(name = "crew_members")
-    private List<CrewMember> crewMembers;
-    @Column(name = "cast_members")
-    private List<CastMember> castMembers;
-    @Column(name = "script")
-    private Script script;
+    //@Column(name = "crew_members")
+    //private List<CrewMember> crewMembers;
+    //@Column(name = "cast_members")
+    //private List<CastMember> castMembers;
+//    @Column(name = "script")
+//    private Script script;
 }

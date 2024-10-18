@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface FilmProductionRepository extends JpaRepository<FilmProduction, Long> {
-    List<FilmProduction> findByStatus(String status);
+    //List<FilmProduction> findByStatus(String status);
 }

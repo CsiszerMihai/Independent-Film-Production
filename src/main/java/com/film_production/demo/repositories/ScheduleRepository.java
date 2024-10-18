@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
-    List<Schedule> findByFilmProductionId(Long filmProductionId);
-
-    List<Schedule> findByShootDate(Date shootDate);
+//    List<Schedule> findByFilmProductionId(Long filmProductionId);
+//
+//    List<Schedule> findByShootDate(Date shootDate);
 }

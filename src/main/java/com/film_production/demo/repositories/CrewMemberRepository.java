@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface CrewMemberRepository extends JpaRepository<CrewMember, Long> {
 
-    List<CrewMember> findByAvailability(Boolean availability);
-
-    List<CrewMember> findByRole(String role);
+//    List<CrewMember> findByAvailability(Boolean availability);
+//
+//    List<CrewMember> findByRole(String role);
 }
