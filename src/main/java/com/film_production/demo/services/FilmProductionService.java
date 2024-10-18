@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface FilmProductionService {
 
-    FilmProductionDTO saveOrUpdateFilmProduction(FilmProductionDTO filmProductionDTO);
+    FilmProductionDTO createFilmProduction(FilmProductionDTO filmProductionDTO);
 
     FilmProductionDTO getFilmProductionById(Long id);
 
     List<FilmProductionDTO> getAllFilmProductions();
 
-    List<FilmProductionDTO> getFilmProductionsByStatus(String status);
+    FilmProductionDTO updateFilmProductionById(Long id, FilmProductionDTO filmProductionDTO);
 
     void deleteFilmProduction(Long id);
 }
