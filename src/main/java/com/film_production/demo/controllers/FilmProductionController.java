@@ -42,8 +42,8 @@ public class FilmProductionController {
     }
 
     @DeleteMapping("/api/film_production/{id}")
-    public ResponseEntity<Void> deleteFilmProduction(@PathVariable Long id) {
-        filmProductionService.deleteFilmProduction(id);
+    public ResponseEntity<Void> deleteFilmProductionById(@PathVariable Long id) {
+        filmProductionService.deleteFilmProductionById(id);
         return ResponseEntity.noContent().build();
     }
 }

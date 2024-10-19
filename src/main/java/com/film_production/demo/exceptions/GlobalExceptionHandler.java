@@ -27,6 +27,31 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(objectToString(Map.of("message", filmProductionNotFoundException.getMessage())), NOT_FOUND);
     }
 
+    @ExceptionHandler(CrewMemberNotFoundException.class)
+    public ResponseEntity<String> crewMemberNotFoundException(CrewMemberNotFoundException crewMemberNotFoundException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", crewMemberNotFoundException.getMessage())), NOT_FOUND);
+    }
+
+    @ExceptionHandler(CastMemberNotFoundException.class)
+    public ResponseEntity<String> castMemberNotFoundException(CastMemberNotFoundException castMemberNotFoundException) {
+        return  new ResponseEntity<>(objectToString(Map.of("message", castMemberNotFoundException.getMessage())), NOT_FOUND);
+    }
+
+    @ExceptionHandler(ScheduleNotFoundException.class)
+    public ResponseEntity<String> ScheduleNotFoundException(ScheduleNotFoundException scheduleNotFoundException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", scheduleNotFoundException.getMessage())), NOT_FOUND);
+    }
+
+    @ExceptionHandler(ScriptNotFoundException.class)
+    public ResponseEntity<String> ScriptNotFoundException(ScriptNotFoundException scriptNotFoundException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", scriptNotFoundException.getMessage())), NOT_FOUND);
+    }
+
+    @ExceptionHandler(ScriptVersionNotFoundException.class)
+    public ResponseEntity<String> ScriptVersionNotFoundException(ScriptVersionNotFoundException scriptVersionNotFoundException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", scriptVersionNotFoundException.getMessage())), NOT_FOUND);
+    }
+
     private String objectToString(Object response) {
         try {
             return objectMapper.writeValueAsString(response);

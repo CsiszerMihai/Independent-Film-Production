@@ -28,7 +28,7 @@ public class FilmProductionServiceImpl implements FilmProductionService {
     public FilmProductionDTO createFilmProduction(FilmProductionDTO filmProductionDTO) {
         FilmProduction filmProductionEntity = objectMapper.convertValue(filmProductionDTO, FilmProduction.class);
         FilmProduction filmProductionEntityResponse = filmProductionRepository.save(filmProductionEntity);
-        log.info("Film Production with id {} was saved", filmProductionEntityResponse.getId());
+        log.info("Film Production with id {} was saved.", filmProductionEntityResponse.getId());
 
         return objectMapper.convertValue(filmProductionEntityResponse, FilmProductionDTO.class);
     }
@@ -79,7 +79,7 @@ public class FilmProductionServiceImpl implements FilmProductionService {
     }
 
     @Override
-    public void deleteFilmProduction(Long id) {
+    public void deleteFilmProductionById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Film Production ID cannot be null.");
         }

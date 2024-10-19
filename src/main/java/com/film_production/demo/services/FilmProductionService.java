@@ -14,5 +14,5 @@ public interface FilmProductionService {
 
     FilmProductionDTO updateFilmProductionById(Long id, FilmProductionDTO filmProductionDTO);
 
-    void deleteFilmProduction(Long id);
+    void deleteFilmProductionById(Long id);
 }
