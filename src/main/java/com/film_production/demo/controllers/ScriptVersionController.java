@@ -17,31 +17,31 @@ public class ScriptVersionController {
         this.scriptVersionService = scriptVersionService;
     }
 
-    @PostMapping("/api/script_version")
+    @PostMapping("/api/script-version")
     public ResponseEntity<ScriptVersionDTO> createScriptVersion(@RequestBody ScriptVersionDTO scriptVersionDTO) {
         ScriptVersionDTO createdScriptVersion = scriptVersionService.createScriptVersion(scriptVersionDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdScriptVersion);
     }
 
-    @GetMapping("/api/script_version/{id}")
+    @GetMapping("/api/script-version/{id}")
     public ResponseEntity<ScriptVersionDTO> getScriptVersionById(@PathVariable Long id) {
         ScriptVersionDTO scriptVersion = scriptVersionService.getScriptVersionById(id);
         return ResponseEntity.ok(scriptVersion);
     }
 
-    @GetMapping("/api_version/script")
+    @GetMapping("/api-version/script")
     public ResponseEntity<List<ScriptVersionDTO>> getAllScriptVersions() {
         List<ScriptVersionDTO> scriptVersions = scriptVersionService.getAllScriptVersions();
         return ResponseEntity.ok(scriptVersions);
     }
 
-    @PutMapping("/api/script_version/{id}")
+    @PutMapping("/api/script-version/{id}")
     public ResponseEntity<ScriptVersionDTO> updateScriptVersionById(@PathVariable Long id, @RequestBody ScriptVersionDTO scriptVersionDTO) {
         ScriptVersionDTO updatedScriptVersion = scriptVersionService.updateScriptVersionById(id, scriptVersionDTO);
         return ResponseEntity.ok(updatedScriptVersion);
     }
 
-    @DeleteMapping("/api/script_version/{id}")
+    @DeleteMapping("/api/script-version/{id}")
     public ResponseEntity<Void> deleteScriptVersionById(@PathVariable Long id) {
         scriptVersionService.deleteScriptVersionById(id);
         return ResponseEntity.noContent().build();

@@ -17,31 +17,31 @@ public class CrewMemberController {
         this.crewMemberService = crewMemberService;
     }
 
-    @PostMapping("/api/crew_member")
+    @PostMapping("/api/crew-member")
     public ResponseEntity<CrewMemberDTO> createCrewMember(@RequestBody CrewMemberDTO crewMemberDTO) {
         CrewMemberDTO createdCrewMember = crewMemberService.createCrewMember(crewMemberDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCrewMember);
     }
 
-    @GetMapping("/api/crew_member/{id}")
+    @GetMapping("/api/crew-member/{id}")
     public ResponseEntity<CrewMemberDTO> getCrewMemberById(@PathVariable Long id) {
         CrewMemberDTO crewMember = crewMemberService.getCrewMemberById(id);
         return ResponseEntity.ok(crewMember);
     }
 
-    @GetMapping("/api/crew_member")
+    @GetMapping("/api/crew-member")
     public ResponseEntity<List<CrewMemberDTO>> getAllCrewMembers() {
         List<CrewMemberDTO> crewMembers = crewMemberService.getAllCrewMembers();
         return ResponseEntity.ok(crewMembers);
     }
 
-    @PutMapping("/api/crew_member/{id}")
+    @PutMapping("/api/crew-member/{id}")
     public ResponseEntity<CrewMemberDTO> updateCrewMemberById(@PathVariable Long id, @RequestBody CrewMemberDTO crewMemberDTO) {
         CrewMemberDTO updatedCrewMember = crewMemberService.updateCrewMemberById(id, crewMemberDTO);
         return ResponseEntity.ok(updatedCrewMember);
     }
 
-    @DeleteMapping("/api/crew_member/{id}")
+    @DeleteMapping("/api/crew-member/{id}")
     public ResponseEntity<Void> deleteCrewMemberById(@PathVariable Long id) {
         crewMemberService.deleteCrewMemberById(id);
         return ResponseEntity.noContent().build();
