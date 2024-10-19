@@ -8,9 +8,11 @@ import com.film_production.demo.models.entities.Script;
 import com.film_production.demo.repositories.ScriptRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ScriptServiceImpl implements ScriptService {
 
     private static final Logger log = LoggerFactory.getLogger(ScriptServiceImpl.class);

@@ -7,9 +7,11 @@ import com.film_production.demo.models.entities.ScriptVersion;
 import com.film_production.demo.repositories.ScriptVersionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ScriptVersionServiceImpl implements ScriptVersionService {
 
     private static final Logger log = LoggerFactory.getLogger(ScriptVersionServiceImpl.class);

@@ -36,7 +36,7 @@ public class CastMemberController {
     }
 
     @PutMapping("/api/cast_member/{id}")
-    public ResponseEntity<CastMemberDTO> updateCastMemberById(@PathVariable Long id, @RequestBody CastMemberDTO castMemberDTO) {
+    public ResponseEntity<CastMemberDTO> updateExistingCastMemberById(@PathVariable Long id, @RequestBody CastMemberDTO castMemberDTO) {
         CastMemberDTO updatedCastMember = castMemberService.updateCastMemberById(id, castMemberDTO);
         return ResponseEntity.ok(updatedCastMember);
     }
