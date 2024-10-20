@@ -17,31 +17,31 @@ public class ScriptController {
         this.scriptService = scriptService;
     }
 
-    @PostMapping("/api/script")
+    @PostMapping("/api/scripts")
     public ResponseEntity<ScriptDTO> createScript(@RequestBody ScriptDTO scriptDTO) {
         ScriptDTO createdScript = scriptService.createScript(scriptDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdScript);
     }
 
-    @GetMapping("/api/script/{id}")
+    @GetMapping("/api/scripts/{id}")
     public ResponseEntity<ScriptDTO> getScriptById(@PathVariable Long id) {
         ScriptDTO script = scriptService.getScriptById(id);
         return ResponseEntity.ok(script);
     }
 
-    @GetMapping("/api/script")
+    @GetMapping("/api/scripts")
     public ResponseEntity<List<ScriptDTO>> getAllScripts() {
         List<ScriptDTO> scripts = scriptService.getAllScripts();
         return ResponseEntity.ok(scripts);
     }
 
-    @PutMapping("/api/script/{id}")
+    @PutMapping("/api/scripts/{id}")
     public ResponseEntity<ScriptDTO> updateScriptById(@PathVariable Long id, @RequestBody ScriptDTO scriptDTO) {
         ScriptDTO updatedScript = scriptService.updateScriptById(id, scriptDTO);
         return ResponseEntity.ok(updatedScript);
     }
 
-    @DeleteMapping("/api/script/{id}")
+    @DeleteMapping("/api/scripts/{id}")
     public ResponseEntity<Void> deleteScriptById(@PathVariable Long id) {
         scriptService.deleteScriptById(id);
         return ResponseEntity.noContent().build();

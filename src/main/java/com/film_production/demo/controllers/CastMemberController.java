@@ -17,31 +17,31 @@ public class CastMemberController {
         this.castMemberService = castMemberService;
     }
 
-    @PostMapping("/api/cast-member")
+    @PostMapping("/api/cast-members")
     public ResponseEntity<CastMemberDTO> createCastMember(@RequestBody CastMemberDTO castMemberDTO) {
         CastMemberDTO createdCastMember = castMemberService.createCastMember(castMemberDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCastMember);
     }
 
-    @GetMapping("/api/cast-member/{id}")
+    @GetMapping("/api/cast-members/{id}")
     public ResponseEntity<CastMemberDTO> getCastMemberById(@PathVariable Long id) {
         CastMemberDTO castMember = castMemberService.getCastMemberById(id);
         return ResponseEntity.ok(castMember);
     }
 
-    @GetMapping("/api/cast-member")
+    @GetMapping("/api/cast-members")
     public ResponseEntity<List<CastMemberDTO>> getAllCastMembers() {
         List<CastMemberDTO> castMembers = castMemberService.getAllCastMembers();
         return ResponseEntity.ok(castMembers);
     }
 
-    @PutMapping("/api/cast-member/{id}")
+    @PutMapping("/api/cast-members/{id}")
     public ResponseEntity<CastMemberDTO> updateExistingCastMemberById(@PathVariable Long id, @RequestBody CastMemberDTO castMemberDTO) {
         CastMemberDTO updatedCastMember = castMemberService.updateCastMemberById(id, castMemberDTO);
         return ResponseEntity.ok(updatedCastMember);
     }
 
-    @DeleteMapping("/api/cast-member/{id}")
+    @DeleteMapping("/api/cast-members/{id}")
     public ResponseEntity<Void> deleteCastMemberById(@PathVariable Long id) {
         castMemberService.deleteCastMemberById(id);
         return ResponseEntity.noContent().build();

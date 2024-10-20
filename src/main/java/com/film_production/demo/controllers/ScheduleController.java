@@ -17,31 +17,31 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
-    @PostMapping("/api/schedule")
+    @PostMapping("/api/schedules")
     public ResponseEntity<ScheduleDTO> createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
         ScheduleDTO createdSchedule = scheduleService.createSchedule(scheduleDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSchedule);
     }
 
-    @GetMapping("/api/schedule/{id}")
+    @GetMapping("/api/schedules/{id}")
     public ResponseEntity<ScheduleDTO> getScheduleById(@PathVariable Long id) {
         ScheduleDTO schedule = scheduleService.getScheduleById(id);
         return ResponseEntity.ok(schedule);
     }
 
-    @GetMapping("/api/schedule")
+    @GetMapping("/api/schedules")
     public ResponseEntity<List<ScheduleDTO>> getAllSchedules() {
         List<ScheduleDTO> schedules = scheduleService.getAllSchedules();
         return ResponseEntity.ok(schedules);
     }
 
-    @PutMapping("/api/schedule/{id}")
+    @PutMapping("/api/schedules/{id}")
     public ResponseEntity<ScheduleDTO> updateScheduleById(@PathVariable Long id, @RequestBody ScheduleDTO scheduleDTO) {
         ScheduleDTO updatedSchedule = scheduleService.updateScheduleById(id, scheduleDTO);
         return ResponseEntity.ok(updatedSchedule);
     }
 
-    @DeleteMapping("/api/schedule/{id}")
+    @DeleteMapping("/api/schedules/{id}")
     public ResponseEntity<Void> deleteScheduleById(@PathVariable Long id) {
         scheduleService.deleteScheduleById(id);
         return ResponseEntity.noContent().build();
