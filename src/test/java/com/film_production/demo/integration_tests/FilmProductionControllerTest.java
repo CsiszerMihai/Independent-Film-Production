@@ -96,4 +96,35 @@ public class FilmProductionControllerTest {
         mockMvc.perform(delete("/api/film-production/{id}", 1))  // Replace '1' with the actual ID if needed
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    void testSearchFilmProductionsShouldReturnOk() throws Exception {
+        mockMvc.perform(post("/api/film-production")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(filmProductionDTO)))
+                .andExpect(status().isCreated());
+
+        FilmProductionDTO anotherFilmProduction = new FilmProductionDTO();
+        anotherFilmProduction.setTitle("New Test");
+        anotherFilmProduction.setDescription("New Test Description");
+        anotherFilmProduction.setStartDate(new Date(2024 - 2 - 24));
+        anotherFilmProduction.setEndDate(new Date(2024 - 3 - 24));
+        anotherFilmProduction.setStatus("Test");
+        anotherFilmProduction.setDirector("Test Director");
+        anotherFilmProduction.setBudget(16000.00);
+
+        mockMvc.perform(post("/api/film-production")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(anotherFilmProduction)))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(get("/api/film-production/search-film")
+                        .param("title", "New Test") // Set search parameters
+                        .param("director", "Test Director")
+                        .param("status", "Test")
+                        .param("minBudget", "10000")
+                        .param("maxBudget", "20000")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.film_production.demo.exceptions.FilmProductionNotFoundException;
 import com.film_production.demo.models.dtos.FilmProductionDTO;
 import com.film_production.demo.models.entities.FilmProduction;
+import com.film_production.demo.specifications.FilmProductionSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.film_production.demo.repositories.FilmProductionRepository;
@@ -88,5 +90,20 @@ public class FilmProductionServiceImpl implements FilmProductionService {
 
         filmProductionRepository.delete(existingFilmProduction);
         log.info("Film Production with id {} was deleted", id);
+    }
+
+    @Override
+    public List<FilmProductionDTO> findFilmProductionsByFilter(String title, String director, String status, Double minBudget, Double maxBudget) {
+        Specification<FilmProduction> spec = Specification
+                .where(FilmProductionSpecification.hasTitle(title))
+                .and(FilmProductionSpecification.hasDirector(director))
+                .and(FilmProductionSpecification.hasStatus(status))
+                .and(FilmProductionSpecification.hasBudgetBetween(minBudget, maxBudget));
+
+        List<FilmProduction> filmProductions = filmProductionRepository.findAll(spec);
+
+        return filmProductions.stream()
+                .map(filmProduction -> objectMapper.convertValue(filmProduction, FilmProductionDTO.class))
+                .toList();
     }
 }

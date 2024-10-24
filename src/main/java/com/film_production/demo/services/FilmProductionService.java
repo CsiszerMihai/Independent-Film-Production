@@ -15,4 +15,6 @@ public interface FilmProductionService {
     FilmProductionDTO updateFilmProductionById(Long id, FilmProductionDTO filmProductionDTO);
 
     void deleteFilmProductionById(Long id);
+
+    List<FilmProductionDTO> findFilmProductionsByFilter(String title, String director, String status, Double minBudget, Double maxBudget);
 }

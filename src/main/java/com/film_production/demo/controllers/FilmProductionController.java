@@ -46,4 +46,16 @@ public class FilmProductionController {
         filmProductionService.deleteFilmProductionById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/api/film-production/search-film")
+    public ResponseEntity<List<FilmProductionDTO>> searchFilmProductions(
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "director", required = false) String director,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "minBudget", required = false) Double minBudget,
+            @RequestParam(value = "maxBudget", required = false) Double maxBudget) {
+
+        List<FilmProductionDTO> filmProductions = filmProductionService.findFilmProductionsByFilter(title, director, status, minBudget, maxBudget);
+        return ResponseEntity.ok(filmProductions);
+    }
 }
