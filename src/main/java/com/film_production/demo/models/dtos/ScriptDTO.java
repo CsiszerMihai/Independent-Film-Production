@@ -12,6 +12,6 @@ public class ScriptDTO {
     private String content;
     private Integer versionNumber;
     private Date updatedAt;
-    private FilmProduction filmProduction;
     private String author;
+    private FilmProductionDTO filmProduction;
 }

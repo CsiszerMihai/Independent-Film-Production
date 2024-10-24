@@ -75,9 +75,6 @@ public class FilmProductionServiceImpl implements FilmProductionService {
         existingFilmProduction.setStatus(filmProductionDTO.getStatus());
         existingFilmProduction.setDirector(filmProductionDTO.getDirector());
         existingFilmProduction.setBudget(filmProductionDTO.getBudget());
-        //existingFilmProduction.setCrewMembers(filmProductionDTO.getCrewMembers());
-        //existingFilmProduction.setCastMembers(filmProductionDTO.getCastMembers());
-        //existingFilmProduction.setScript(filmProductionDTO.getScript());
     }
 
     @Override

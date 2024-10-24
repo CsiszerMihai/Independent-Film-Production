@@ -23,6 +23,4 @@ public class CrewMember {
     private String phoneNumber;
     @Column(name = "availability")
     private Boolean availability;
-//    @Column(name = "film_production")
-//    private FilmProduction filmProduction;
 }

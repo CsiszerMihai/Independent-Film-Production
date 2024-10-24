@@ -2,7 +2,6 @@ package com.film_production.demo.models.dtos;
 
 import com.film_production.demo.models.entities.CastMember;
 import com.film_production.demo.models.entities.CrewMember;
-import com.film_production.demo.models.entities.FilmProduction;
 import lombok.Data;
 
 import java.time.LocalTime;
@@ -19,5 +18,4 @@ public class ScheduleDTO {
     private LocalTime endTime;
     private List<CastMember> castMembers;
     private List<CrewMember> crewMembers;
-    private FilmProduction filmProduction;
 }

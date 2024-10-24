@@ -28,10 +28,4 @@ public class FilmProduction {
     private String director;
     @Column(name = "budget")
     private Double budget;
-    //@Column(name = "crew_members")
-    //private List<CrewMember> crewMembers;
-    //@Column(name = "cast_members")
-    //private List<CastMember> castMembers;
-//    @Column(name = "script")
-//    private Script script;
 }

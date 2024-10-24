@@ -2,12 +2,16 @@ package com.film_production.demo.controllers;
 
 import com.film_production.demo.models.dtos.FilmProductionDTO;
 import com.film_production.demo.services.FilmProductionService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
+@RequestMapping("/api/film-production")
 @RestController
 public class FilmProductionController {
 
@@ -18,7 +22,7 @@ public class FilmProductionController {
     }
 
     @PostMapping("/api/film-production")
-    public ResponseEntity<FilmProductionDTO> createFilmProduction(@RequestBody FilmProductionDTO filmProductionDTO) {
+    public ResponseEntity<FilmProductionDTO> createFilmProduction(@Valid @RequestBody FilmProductionDTO filmProductionDTO) {
         FilmProductionDTO createdFilmProduction = filmProductionService.createFilmProduction(filmProductionDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdFilmProduction);
     }
@@ -36,7 +40,7 @@ public class FilmProductionController {
     }
 
     @PutMapping("/api/film-production/{id}")
-    public ResponseEntity<FilmProductionDTO> updateFilmProductionById(@PathVariable Long id, @RequestBody FilmProductionDTO filmProductionDTO) {
+    public ResponseEntity<FilmProductionDTO> updateFilmProductionById(@PathVariable Long id,@Valid @RequestBody FilmProductionDTO filmProductionDTO) {
         FilmProductionDTO updatedFilmProduction = filmProductionService.updateFilmProductionById(id, filmProductionDTO);
         return ResponseEntity.ok(updatedFilmProduction);
     }

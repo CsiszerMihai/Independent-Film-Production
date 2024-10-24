@@ -19,8 +19,6 @@ public class Script {
     private Integer versionNumber;
     @Column(name = "updated_at")
     private Date updatedAt;
-//    @Column(name = "film_production")
-//    private FilmProduction filmProduction;
     @Column(name = "author")
     private String author;
 }

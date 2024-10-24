@@ -19,6 +19,4 @@ public class CastMember {
     private String lastName;
     @Column(name = "availability")
     private Boolean availability;
-    //@Column(name = "film_production")
-    //private FilmProduction filmProduction;
 }

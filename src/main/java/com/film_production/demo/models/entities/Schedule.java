@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.time.LocalTime;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
@@ -23,10 +22,4 @@ public class Schedule {
     private LocalTime startTime;
     @Column(name = "end_time")
     private LocalTime endTime;
-//    @Column(name = "cast_members")
-//    private List<CastMember> castMembers;
-//    @Column(name = "crew_members")
-//    private List<CrewMember> crewMembers;
-//    @Column(name = "film_production")
-//    private FilmProduction filmProduction;
 }
