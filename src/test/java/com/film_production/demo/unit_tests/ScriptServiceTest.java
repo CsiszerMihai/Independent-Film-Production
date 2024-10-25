@@ -19,6 +19,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class ScriptServiceTest {
 
     @Mock
@@ -33,9 +34,8 @@ public class ScriptServiceTest {
     private ScriptDTO scriptDTO;
     private Script script;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    @Test
+    void testCreateScript() {
         scriptDTO = new ScriptDTO();
         scriptDTO.setId(1L);
         scriptDTO.setContent("Test Content");
@@ -43,10 +43,7 @@ public class ScriptServiceTest {
         script = new Script();
         script.setId(1L);
         script.setContent("Test Content");
-    }
 
-    @Test
-    void testCreateScript() {
         when(objectMapper.convertValue(scriptDTO, Script.class)).thenReturn(script);
         when(scriptRepository.save(script)).thenReturn(script);
         when(objectMapper.convertValue(script, ScriptDTO.class)).thenReturn(scriptDTO);
@@ -60,6 +57,14 @@ public class ScriptServiceTest {
 
     @Test
     void testGetScriptById_Success() {
+        scriptDTO = new ScriptDTO();
+        scriptDTO.setId(1L);
+        scriptDTO.setContent("Test Content");
+
+        script = new Script();
+        script.setId(1L);
+        script.setContent("Test Content");
+
         when(scriptRepository.findById(1L)).thenReturn(Optional.of(script));
         when(objectMapper.convertValue(script, ScriptDTO.class)).thenReturn(scriptDTO);
 
@@ -72,6 +77,14 @@ public class ScriptServiceTest {
 
     @Test
     void testGetScriptById_NotFound() {
+        scriptDTO = new ScriptDTO();
+        scriptDTO.setId(1L);
+        scriptDTO.setContent("Test Content");
+
+        script = new Script();
+        script.setId(1L);
+        script.setContent("Test Content");
+
         when(scriptRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(ScriptNotFoundException.class, () -> scriptService.getScriptById(1L));

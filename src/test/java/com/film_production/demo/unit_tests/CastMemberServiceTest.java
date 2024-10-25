@@ -6,12 +6,10 @@ import com.film_production.demo.models.dtos.CastMemberDTO;
 import com.film_production.demo.models.entities.CastMember;
 import com.film_production.demo.repositories.CastMemberRepository;
 import com.film_production.demo.services.CastMemberServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -19,7 +17,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-
+@ExtendWith(MockitoExtension.class)
 public class CastMemberServiceTest {
 
     @Mock
@@ -34,9 +32,8 @@ public class CastMemberServiceTest {
     private CastMemberDTO castMemberDTO;
     private CastMember castMember;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    @Test
+    void testCreateCastMember() {
         castMemberDTO = new CastMemberDTO();
         castMemberDTO.setId(1L);
         castMemberDTO.setRole("Test Role");
@@ -44,10 +41,7 @@ public class CastMemberServiceTest {
         castMember = new CastMember();
         castMember.setId(1L);
         castMember.setRole("Test Role");
-    }
 
-    @Test
-    void testCreateCastMember() {
         when(objectMapper.convertValue(castMemberDTO, CastMember.class)).thenReturn(castMember);
         when(castMemberRepository.save(castMember)).thenReturn(castMember);
         when(objectMapper.convertValue(castMember, CastMemberDTO.class)).thenReturn(castMemberDTO);
@@ -61,6 +55,14 @@ public class CastMemberServiceTest {
 
     @Test
     void testGetCastMemberById_Success() {
+        castMemberDTO = new CastMemberDTO();
+        castMemberDTO.setId(1L);
+        castMemberDTO.setRole("Test Role");
+
+        castMember = new CastMember();
+        castMember.setId(1L);
+        castMember.setRole("Test Role");
+
         when(castMemberRepository.findById(1L)).thenReturn(Optional.of(castMember));
         when(objectMapper.convertValue(castMember, CastMemberDTO.class)).thenReturn(castMemberDTO);
 
@@ -73,6 +75,14 @@ public class CastMemberServiceTest {
 
     @Test
     void testGetCastMemberById_NotFound() {
+        castMemberDTO = new CastMemberDTO();
+        castMemberDTO.setId(1L);
+        castMemberDTO.setRole("Test Role");
+
+        castMember = new CastMember();
+        castMember.setId(1L);
+        castMember.setRole("Test Role");
+
         when(castMemberRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(CastMemberNotFoundException.class, () -> castMemberService.getCastMemberById(1L));

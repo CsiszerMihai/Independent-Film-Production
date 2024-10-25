@@ -6,12 +6,10 @@ import com.film_production.demo.models.dtos.ScheduleDTO;
 import com.film_production.demo.models.entities.Schedule;
 import com.film_production.demo.repositories.ScheduleRepository;
 import com.film_production.demo.services.ScheduleServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -19,6 +17,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class ScheduleServiceTest {
 
     @Mock
@@ -33,9 +32,8 @@ public class ScheduleServiceTest {
     private ScheduleDTO scheduleDTO;
     private Schedule schedule;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    @Test
+    void testCreateSchedule() {
         scheduleDTO = new ScheduleDTO();
         scheduleDTO.setId(1L);
         scheduleDTO.setLocation("Test Location");
@@ -43,10 +41,7 @@ public class ScheduleServiceTest {
         schedule = new Schedule();
         schedule.setId(1L);
         schedule.setLocation("Test Location");
-    }
 
-    @Test
-    void testCreateSchedule() {
         when(objectMapper.convertValue(scheduleDTO, Schedule.class)).thenReturn(schedule);
         when(scheduleRepository.save(schedule)).thenReturn(schedule);
         when(objectMapper.convertValue(schedule, ScheduleDTO.class)).thenReturn(scheduleDTO);
@@ -60,6 +55,14 @@ public class ScheduleServiceTest {
 
     @Test
     void testGetScheduleById_Success() {
+        scheduleDTO = new ScheduleDTO();
+        scheduleDTO.setId(1L);
+        scheduleDTO.setLocation("Test Location");
+
+        schedule = new Schedule();
+        schedule.setId(1L);
+        schedule.setLocation("Test Location");
+
         when(scheduleRepository.findById(1L)).thenReturn(Optional.of(schedule));
         when(objectMapper.convertValue(schedule, ScheduleDTO.class)).thenReturn(scheduleDTO);
 
@@ -72,6 +75,14 @@ public class ScheduleServiceTest {
 
     @Test
     void testGetScheduleById_NotFound() {
+        scheduleDTO = new ScheduleDTO();
+        scheduleDTO.setId(1L);
+        scheduleDTO.setLocation("Test Location");
+
+        schedule = new Schedule();
+        schedule.setId(1L);
+        schedule.setLocation("Test Location");
+
         when(scheduleRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(ScheduleNotFoundException.class, () -> scheduleService.getScheduleById(1L));

@@ -1,10 +1,11 @@
 package com.film_production.demo.integration_tests;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.film_production.demo.models.dtos.CastMemberDTO;
 import com.film_production.demo.models.entities.CastMember;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -32,19 +34,20 @@ public class CastMemberControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private CastMember castMember;
-
-    @BeforeEach
-    void setUp() {
-        castMember = new CastMember();
+    @Test
+    void testCreateCastMemberShouldReturnCreated() throws Exception {
+        CastMember castMember = new CastMember();
         castMember.setRole("Lead Actor");
         castMember.setFirstName("John");
         castMember.setLastName("Doe");
         castMember.setAvailability(true);
-    }
 
-    @Test
-    void testCreateCastMemberShouldReturnCreated() throws Exception {
+        CastMemberDTO castMemberDTO = new CastMemberDTO();
+        castMemberDTO.setRole("Lead Actor");
+        castMemberDTO.setFirstName("John");
+        castMemberDTO.setLastName("Doe");
+        castMemberDTO.setAvailability(true);
+
         mockMvc.perform(post("/api/cast-members")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(castMember)))
@@ -53,10 +56,24 @@ public class CastMemberControllerTest {
 
     @Test
     void testGetCastMemberShouldReturnOk() throws Exception {
+        CastMember castMember = new CastMember();
+        castMember.setRole("Lead Actor");
+        castMember.setFirstName("John");
+        castMember.setLastName("Doe");
+        castMember.setAvailability(true);
+
+        CastMemberDTO castMemberDTO = new CastMemberDTO();
+        castMemberDTO.setRole("Lead Actor");
+        castMemberDTO.setFirstName("John");
+        castMemberDTO.setLastName("Doe");
+        castMemberDTO.setAvailability(true);
+
         mockMvc.perform(post("/api/cast-members")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(castMember)))
                 .andExpect(status().isCreated());
+
+        castMember.setId(1L);
 
         mockMvc.perform(get("/api/cast-members")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -65,13 +82,30 @@ public class CastMemberControllerTest {
 
     @Test
     void testUpdateCastMemberShouldReturnOk() throws Exception {
-        mockMvc.perform(post("/api/cast-members")
+        CastMember castMember = new CastMember();
+        castMember.setRole("Lead Actor");
+        castMember.setFirstName("John");
+        castMember.setLastName("Doe");
+        castMember.setAvailability(true);
+
+        CastMemberDTO castMemberDTO = new CastMemberDTO();
+        castMemberDTO.setRole("Lead Actor");
+        castMemberDTO.setFirstName("John");
+        castMemberDTO.setLastName("Doe");
+        castMemberDTO.setAvailability(true);
+
+        MvcResult result = mockMvc.perform(post("/api/cast-members")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(castMember)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                        .andReturn();
+
+        String locationHeader = result.getResponse().getContentAsString();
+        JsonNode jsonNode = objectMapper.readTree(locationHeader);
+        Long id = jsonNode.get("id").asLong();
 
         castMember.setFirstName("Jane");
-        mockMvc.perform(put("/api/cast-members/{id}", 1)
+        mockMvc.perform(put("/api/cast-members/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(castMember)))
                 .andExpect(status().isOk());
@@ -79,12 +113,29 @@ public class CastMemberControllerTest {
 
     @Test
     void testDeleteCastMemberShouldReturnNoContent() throws Exception {
-        mockMvc.perform(post("/api/cast-members")
+        CastMember castMember = new CastMember();
+        castMember.setRole("Lead Actor");
+        castMember.setFirstName("John");
+        castMember.setLastName("Doe");
+        castMember.setAvailability(true);
+
+        CastMemberDTO castMemberDTO = new CastMemberDTO();
+        castMemberDTO.setRole("Lead Actor");
+        castMemberDTO.setFirstName("John");
+        castMemberDTO.setLastName("Doe");
+        castMemberDTO.setAvailability(true);
+
+        MvcResult result = mockMvc.perform(post("/api/cast-members")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(castMember)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                        .andReturn();
 
-        mockMvc.perform(delete("/api/cast-members/{id}", 1))
+        String locationHeader = result.getResponse().getContentAsString();
+        JsonNode jsonNode = objectMapper.readTree(locationHeader);
+        Long id = jsonNode.get("id").asLong();
+
+        mockMvc.perform(delete("/api/cast-members/{id}", id))
                 .andExpect(status().isNoContent());
     }
 }

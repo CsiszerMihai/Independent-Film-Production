@@ -1,10 +1,11 @@
 package com.film_production.demo.integration_tests;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.film_production.demo.models.dtos.FilmProductionDTO;
+import com.film_production.demo.models.entities.FilmProduction;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Date;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -38,10 +37,11 @@ public class FilmProductionControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private FilmProductionDTO filmProductionDTO;
+    @Test
+    void testCreateFilmProductionShouldReturnCreated() throws Exception {
+        FilmProductionDTO filmProductionDTO;
+        FilmProduction filmProduction;
 
-    @BeforeEach
-    void setUp() {
         filmProductionDTO = new FilmProductionDTO();
         filmProductionDTO.setTitle("Test Title.");
         filmProductionDTO.setDescription("Test Description Lorem Ipsum");
@@ -50,10 +50,16 @@ public class FilmProductionControllerTest {
         filmProductionDTO.setStatus("Test Status");
         filmProductionDTO.setDirector("Test Director");
         filmProductionDTO.setBudget(12000.00);
-    }
 
-    @Test
-    void testCreateFilmProductionShouldReturnCreated() throws Exception {
+        filmProduction = new FilmProduction();
+        filmProduction.setTitle("Test Title.");
+        filmProduction.setDescription("Test Description Lorem Ipsum");
+        filmProduction.setStartDate(new Date(2025 - 2 - 24));
+        filmProduction.setEndDate(new Date(2025 - 3 - 24));
+        filmProduction.setStatus("Test Status");
+        filmProduction.setDirector("Test Director");
+        filmProduction.setBudget(12000.00);
+
         mockMvc.perform(post("/api/film-productions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filmProductionDTO)))
@@ -62,6 +68,27 @@ public class FilmProductionControllerTest {
 
     @Test
     void testGetFilmProductionShouldReturnOk() throws Exception {
+        FilmProductionDTO filmProductionDTO;
+        FilmProduction filmProduction;
+
+        filmProductionDTO = new FilmProductionDTO();
+        filmProductionDTO.setTitle("Test Title.");
+        filmProductionDTO.setDescription("Test Description Lorem Ipsum");
+        filmProductionDTO.setStartDate(new Date(2025 - 2 - 24));
+        filmProductionDTO.setEndDate(new Date(2025 - 3 - 24));
+        filmProductionDTO.setStatus("Test Status");
+        filmProductionDTO.setDirector("Test Director");
+        filmProductionDTO.setBudget(12000.00);
+
+        filmProduction = new FilmProduction();
+        filmProduction.setTitle("Test Title.");
+        filmProduction.setDescription("Test Description Lorem Ipsum");
+        filmProduction.setStartDate(new Date(2025 - 2 - 24));
+        filmProduction.setEndDate(new Date(2025 - 3 - 24));
+        filmProduction.setStatus("Test Status");
+        filmProduction.setDirector("Test Director");
+        filmProduction.setBudget(12000.00);
+
         mockMvc.perform(post("/api/film-productions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filmProductionDTO)))
@@ -74,13 +101,37 @@ public class FilmProductionControllerTest {
 
     @Test
     void testUpdateFilmProductionShouldReturnOk() throws Exception {
-        mockMvc.perform(post("/api/film-productions")
+        FilmProductionDTO filmProductionDTO = new FilmProductionDTO();
+        filmProductionDTO.setTitle("Test Title.");
+        filmProductionDTO.setDescription("Test Description Lorem Ipsum");
+        filmProductionDTO.setStartDate(new Date(2025 - 2 - 24));
+        filmProductionDTO.setEndDate(new Date(2025 - 3 - 24));
+        filmProductionDTO.setStatus("Test Status");
+        filmProductionDTO.setDirector("Test Director");
+        filmProductionDTO.setBudget(12000.00);
+
+        FilmProduction filmProduction = new FilmProduction();
+        filmProduction.setId(1L);
+        filmProduction.setTitle("Test Title.");
+        filmProduction.setDescription("Test Description Lorem Ipsum");
+        filmProduction.setStartDate(new Date(2025 - 2 - 24));
+        filmProduction.setEndDate(new Date(2025 - 3 - 24));
+        filmProduction.setStatus("Test Status");
+        filmProduction.setDirector("Test Director");
+        filmProduction.setBudget(12000.00);
+
+        MvcResult result = mockMvc.perform(post("/api/film-productions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filmProductionDTO)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        String locationHeader = result.getResponse().getContentAsString();
+        JsonNode jsonNode = objectMapper.readTree(locationHeader);
+        Long id = jsonNode.get("id").asLong();
 
         filmProductionDTO.setTitle("Updated Title");
-        mockMvc.perform(put("/api/film-productions/{id}", 1)
+        mockMvc.perform(put("/api/film-productions/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filmProductionDTO)))
                 .andExpect(status().isOk());
@@ -88,17 +139,66 @@ public class FilmProductionControllerTest {
 
     @Test
     void testDeleteFilmProductionShouldReturnNoContent() throws Exception {
-        mockMvc.perform(post("/api/film-productions")
+        FilmProductionDTO filmProductionDTO;
+        FilmProduction filmProduction;
+
+        filmProductionDTO = new FilmProductionDTO();
+        filmProductionDTO.setId(1L);
+        filmProductionDTO.setTitle("Test Title.");
+        filmProductionDTO.setDescription("Test Description Lorem Ipsum");
+        filmProductionDTO.setStartDate(new Date(2025 - 2 - 24));
+        filmProductionDTO.setEndDate(new Date(2025 - 3 - 24));
+        filmProductionDTO.setStatus("Test Status");
+        filmProductionDTO.setDirector("Test Director");
+        filmProductionDTO.setBudget(12000.00);
+
+        filmProduction = new FilmProduction();
+        filmProduction.setId(1L);
+        filmProduction.setTitle("Test Title.");
+        filmProduction.setDescription("Test Description Lorem Ipsum");
+        filmProduction.setStartDate(new Date(2025 - 2 - 24));
+        filmProduction.setEndDate(new Date(2025 - 3 - 24));
+        filmProduction.setStatus("Test Status");
+        filmProduction.setDirector("Test Director");
+        filmProduction.setBudget(12000.00);
+
+        MvcResult result = mockMvc.perform(post("/api/film-productions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filmProductionDTO)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                        .andReturn();
 
-        mockMvc.perform(delete("/api/film-productions/{id}", 1))  // Replace '1' with the actual ID if needed
+        String locationHeader = result.getResponse().getContentAsString();
+        JsonNode jsonNode = objectMapper.readTree(locationHeader);
+        Long id = jsonNode.get("id").asLong();
+
+        mockMvc.perform(delete("/api/film-productions/{id}", id))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     void testSearchFilmProductionsShouldReturnOk() throws Exception {
+        FilmProductionDTO filmProductionDTO;
+        FilmProduction filmProduction;
+
+        filmProductionDTO = new FilmProductionDTO();
+        filmProductionDTO.setTitle("Test Title.");
+        filmProductionDTO.setDescription("Test Description Lorem Ipsum");
+        filmProductionDTO.setStartDate(new Date(2025 - 2 - 24));
+        filmProductionDTO.setEndDate(new Date(2025 - 3 - 24));
+        filmProductionDTO.setStatus("Test Status");
+        filmProductionDTO.setDirector("Test Director");
+        filmProductionDTO.setBudget(12000.00);
+
+        filmProduction = new FilmProduction();
+        filmProduction.setTitle("Test Title.");
+        filmProduction.setDescription("Test Description Lorem Ipsum");
+        filmProduction.setStartDate(new Date(2025 - 2 - 24));
+        filmProduction.setEndDate(new Date(2025 - 3 - 24));
+        filmProduction.setStatus("Test Status");
+        filmProduction.setDirector("Test Director");
+        filmProduction.setBudget(12000.00);
+
         mockMvc.perform(post("/api/film-productions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filmProductionDTO)))

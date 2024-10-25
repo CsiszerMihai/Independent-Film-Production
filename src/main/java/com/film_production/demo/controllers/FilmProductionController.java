@@ -36,7 +36,7 @@ public class FilmProductionController {
         return ResponseEntity.ok(filmProductionService.getAllFilmProductions());
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<FilmProductionDTO> updateFilmProductionById(@PathVariable Long id,@Valid @RequestBody FilmProductionDTO filmProductionDTO) {
         return ResponseEntity.ok(filmProductionService.updateFilmProductionById(id, filmProductionDTO));
     }

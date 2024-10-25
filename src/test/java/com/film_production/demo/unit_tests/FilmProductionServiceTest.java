@@ -1,24 +1,23 @@
 package com.film_production.demo.unit_tests;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.film_production.demo.exceptions.FilmProductionNotFoundException;
 import com.film_production.demo.models.dtos.FilmProductionDTO;
 import com.film_production.demo.models.entities.FilmProduction;
 import com.film_production.demo.repositories.FilmProductionRepository;
 import com.film_production.demo.services.FilmProductionServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 public class FilmProductionServiceTest {
 
     @Mock
@@ -33,9 +32,9 @@ public class FilmProductionServiceTest {
     private FilmProductionDTO filmProductionDTO;
     private FilmProduction filmProduction;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    @Test
+    void testCreateFilmProduction() {
+
         filmProductionDTO = new FilmProductionDTO();
         filmProductionDTO.setId(1L);
         filmProductionDTO.setTitle("Test Film");
@@ -43,10 +42,7 @@ public class FilmProductionServiceTest {
         filmProduction = new FilmProduction();
         filmProduction.setId(1L);
         filmProduction.setTitle("Test Film");
-    }
 
-    @Test
-    void testCreateFilmProduction() {
         when(objectMapper.convertValue(filmProductionDTO, FilmProduction.class)).thenReturn(filmProduction);
         when(filmProductionRepository.save(filmProduction)).thenReturn(filmProduction);
         when(objectMapper.convertValue(filmProduction, FilmProductionDTO.class)).thenReturn(filmProductionDTO);
@@ -60,6 +56,15 @@ public class FilmProductionServiceTest {
 
     @Test
     void testGetFilmProductionById_Success() {
+
+        filmProductionDTO = new FilmProductionDTO();
+        filmProductionDTO.setId(1L);
+        filmProductionDTO.setTitle("Test Film");
+
+        filmProduction = new FilmProduction();
+        filmProduction.setId(1L);
+        filmProduction.setTitle("Test Film");
+
         when(filmProductionRepository.findById(1L)).thenReturn(Optional.of(filmProduction));
         when(objectMapper.convertValue(filmProduction, FilmProductionDTO.class)).thenReturn(filmProductionDTO);
 
@@ -72,6 +77,15 @@ public class FilmProductionServiceTest {
 
     @Test
     void testGetFilmProductionById_NotFound() {
+
+        filmProductionDTO = new FilmProductionDTO();
+        filmProductionDTO.setId(1L);
+        filmProductionDTO.setTitle("Test Film");
+
+        filmProduction = new FilmProduction();
+        filmProduction.setId(1L);
+        filmProduction.setTitle("Test Film");
+
         when(filmProductionRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(FilmProductionNotFoundException.class, () -> filmProductionService.getFilmProductionById(1L));

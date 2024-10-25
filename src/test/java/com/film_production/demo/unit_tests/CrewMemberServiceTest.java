@@ -6,12 +6,10 @@ import com.film_production.demo.models.dtos.CrewMemberDTO;
 import com.film_production.demo.models.entities.CrewMember;
 import com.film_production.demo.repositories.CrewMemberRepository;
 import com.film_production.demo.services.CrewMemberServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -19,6 +17,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class CrewMemberServiceTest {
 
     @Mock
@@ -33,9 +32,9 @@ public class CrewMemberServiceTest {
     private CrewMemberDTO crewMemberDTO;
     private CrewMember crewMember;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    @Test
+    void testCreateCrewMember() {
+
         crewMemberDTO = new CrewMemberDTO();
         crewMemberDTO.setId(1L);
         crewMemberDTO.setRole("Test Role");
@@ -43,10 +42,7 @@ public class CrewMemberServiceTest {
         crewMember = new CrewMember();
         crewMember.setId(1L);
         crewMember.setRole("Test Role");
-    }
 
-    @Test
-    void testCreateCrewMember() {
         when(objectMapper.convertValue(crewMemberDTO, CrewMember.class)).thenReturn(crewMember);
         when(crewMemberRepository.save(crewMember)).thenReturn(crewMember);
         when(objectMapper.convertValue(crewMember, CrewMemberDTO.class)).thenReturn(crewMemberDTO);
@@ -60,6 +56,15 @@ public class CrewMemberServiceTest {
 
     @Test
     void testGetCrewMemberById_Success() {
+
+        crewMemberDTO = new CrewMemberDTO();
+        crewMemberDTO.setId(1L);
+        crewMemberDTO.setRole("Test Role");
+
+        crewMember = new CrewMember();
+        crewMember.setId(1L);
+        crewMember.setRole("Test Role");
+
         when(crewMemberRepository.findById(1L)).thenReturn(Optional.of(crewMember));
         when(objectMapper.convertValue(crewMember, CrewMemberDTO.class)).thenReturn(crewMemberDTO);
 
@@ -72,6 +77,15 @@ public class CrewMemberServiceTest {
 
     @Test
     void testGetCrewMemberById_NotFound() {
+
+        crewMemberDTO = new CrewMemberDTO();
+        crewMemberDTO.setId(1L);
+        crewMemberDTO.setRole("Test Role");
+
+        crewMember = new CrewMember();
+        crewMember.setId(1L);
+        crewMember.setRole("Test Role");
+
         when(crewMemberRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(CrewMemberNotFoundException.class, () -> crewMemberService.getCrewMemberById(1L));
