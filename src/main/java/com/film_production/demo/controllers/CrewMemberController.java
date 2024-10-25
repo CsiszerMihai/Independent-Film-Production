@@ -4,10 +4,13 @@ import com.film_production.demo.models.dtos.CrewMemberDTO;
 import com.film_production.demo.services.CrewMemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
+@RequestMapping("/api/crew-members")
 @RestController
 public class CrewMemberController {
 
@@ -17,31 +20,27 @@ public class CrewMemberController {
         this.crewMemberService = crewMemberService;
     }
 
-    @PostMapping("/api/crew-members")
+    @PostMapping
     public ResponseEntity<CrewMemberDTO> createCrewMember(@RequestBody CrewMemberDTO crewMemberDTO) {
-        CrewMemberDTO createdCrewMember = crewMemberService.createCrewMember(crewMemberDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCrewMember);
+        return ResponseEntity.status(HttpStatus.CREATED).body(crewMemberService.createCrewMember(crewMemberDTO));
     }
 
-    @GetMapping("/api/crew-members/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CrewMemberDTO> getCrewMemberById(@PathVariable Long id) {
-        CrewMemberDTO crewMember = crewMemberService.getCrewMemberById(id);
-        return ResponseEntity.ok(crewMember);
+        return ResponseEntity.ok(crewMemberService.getCrewMemberById(id));
     }
 
-    @GetMapping("/api/crew-members")
+    @GetMapping
     public ResponseEntity<List<CrewMemberDTO>> getAllCrewMembers() {
-        List<CrewMemberDTO> crewMembers = crewMemberService.getAllCrewMembers();
-        return ResponseEntity.ok(crewMembers);
+        return ResponseEntity.ok(crewMemberService.getAllCrewMembers());
     }
 
-    @PutMapping("/api/crew-members/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<CrewMemberDTO> updateCrewMemberById(@PathVariable Long id, @RequestBody CrewMemberDTO crewMemberDTO) {
-        CrewMemberDTO updatedCrewMember = crewMemberService.updateCrewMemberById(id, crewMemberDTO);
-        return ResponseEntity.ok(updatedCrewMember);
+        return ResponseEntity.ok(crewMemberService.updateCrewMemberById(id, crewMemberDTO));
     }
 
-    @DeleteMapping("/api/crew-members/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCrewMemberById(@PathVariable Long id) {
         crewMemberService.deleteCrewMemberById(id);
         return ResponseEntity.noContent().build();

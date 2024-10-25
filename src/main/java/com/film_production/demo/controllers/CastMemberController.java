@@ -4,10 +4,13 @@ import com.film_production.demo.models.dtos.CastMemberDTO;
 import com.film_production.demo.services.CastMemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
+@RequestMapping("/api/cast-members")
 @RestController
 public class CastMemberController {
 
@@ -17,31 +20,27 @@ public class CastMemberController {
         this.castMemberService = castMemberService;
     }
 
-    @PostMapping("/api/cast-members")
+    @PostMapping
     public ResponseEntity<CastMemberDTO> createCastMember(@RequestBody CastMemberDTO castMemberDTO) {
-        CastMemberDTO createdCastMember = castMemberService.createCastMember(castMemberDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCastMember);
+        return ResponseEntity.status(HttpStatus.CREATED).body(castMemberService.createCastMember(castMemberDTO));
     }
 
-    @GetMapping("/api/cast-members/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CastMemberDTO> getCastMemberById(@PathVariable Long id) {
-        CastMemberDTO castMember = castMemberService.getCastMemberById(id);
-        return ResponseEntity.ok(castMember);
+        return ResponseEntity.ok(castMemberService.getCastMemberById(id));
     }
 
-    @GetMapping("/api/cast-members")
+    @GetMapping
     public ResponseEntity<List<CastMemberDTO>> getAllCastMembers() {
-        List<CastMemberDTO> castMembers = castMemberService.getAllCastMembers();
-        return ResponseEntity.ok(castMembers);
+        return ResponseEntity.ok(castMemberService.getAllCastMembers());
     }
 
-    @PutMapping("/api/cast-members/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<CastMemberDTO> updateExistingCastMemberById(@PathVariable Long id, @RequestBody CastMemberDTO castMemberDTO) {
-        CastMemberDTO updatedCastMember = castMemberService.updateCastMemberById(id, castMemberDTO);
-        return ResponseEntity.ok(updatedCastMember);
+        return ResponseEntity.ok(castMemberService.updateCastMemberById(id, castMemberDTO));
     }
 
-    @DeleteMapping("/api/cast-members/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCastMemberById(@PathVariable Long id) {
         castMemberService.deleteCastMemberById(id);
         return ResponseEntity.noContent().build();

@@ -4,10 +4,13 @@ import com.film_production.demo.models.dtos.ScriptDTO;
 import com.film_production.demo.services.ScriptService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
+@RequestMapping("/api/scripts")
 @RestController
 public class ScriptController {
 
@@ -17,31 +20,27 @@ public class ScriptController {
         this.scriptService = scriptService;
     }
 
-    @PostMapping("/api/scripts")
+    @PostMapping
     public ResponseEntity<ScriptDTO> createScript(@RequestBody ScriptDTO scriptDTO) {
-        ScriptDTO createdScript = scriptService.createScript(scriptDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdScript);
+        return ResponseEntity.status(HttpStatus.CREATED).body(scriptService.createScript(scriptDTO));
     }
 
-    @GetMapping("/api/scripts/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ScriptDTO> getScriptById(@PathVariable Long id) {
-        ScriptDTO script = scriptService.getScriptById(id);
-        return ResponseEntity.ok(script);
+        return ResponseEntity.ok(scriptService.getScriptById(id));
     }
 
-    @GetMapping("/api/scripts")
+    @GetMapping
     public ResponseEntity<List<ScriptDTO>> getAllScripts() {
-        List<ScriptDTO> scripts = scriptService.getAllScripts();
-        return ResponseEntity.ok(scripts);
+        return ResponseEntity.ok(scriptService.getAllScripts());
     }
 
-    @PutMapping("/api/scripts/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ScriptDTO> updateScriptById(@PathVariable Long id, @RequestBody ScriptDTO scriptDTO) {
-        ScriptDTO updatedScript = scriptService.updateScriptById(id, scriptDTO);
-        return ResponseEntity.ok(updatedScript);
+        return ResponseEntity.ok(scriptService.updateScriptById(id, scriptDTO));
     }
 
-    @DeleteMapping("/api/scripts/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteScriptById(@PathVariable Long id) {
         scriptService.deleteScriptById(id);
         return ResponseEntity.noContent().build();

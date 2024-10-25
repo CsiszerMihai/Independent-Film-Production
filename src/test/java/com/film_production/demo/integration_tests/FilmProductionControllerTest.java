@@ -54,7 +54,7 @@ public class FilmProductionControllerTest {
 
     @Test
     void testCreateFilmProductionShouldReturnCreated() throws Exception {
-        mockMvc.perform(post("/api/film-production")
+        mockMvc.perform(post("/api/film-productions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filmProductionDTO)))
                 .andExpect(status().isCreated());
@@ -62,25 +62,25 @@ public class FilmProductionControllerTest {
 
     @Test
     void testGetFilmProductionShouldReturnOk() throws Exception {
-        mockMvc.perform(post("/api/film-production")
+        mockMvc.perform(post("/api/film-productions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filmProductionDTO)))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(get("/api/film-production")
+        mockMvc.perform(get("/api/film-productions")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
     void testUpdateFilmProductionShouldReturnOk() throws Exception {
-        mockMvc.perform(post("/api/film-production")
+        mockMvc.perform(post("/api/film-productions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filmProductionDTO)))
                 .andExpect(status().isCreated());
 
         filmProductionDTO.setTitle("Updated Title");
-        mockMvc.perform(put("/api/film-production/{id}", 1)
+        mockMvc.perform(put("/api/film-productions/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filmProductionDTO)))
                 .andExpect(status().isOk());
@@ -88,18 +88,18 @@ public class FilmProductionControllerTest {
 
     @Test
     void testDeleteFilmProductionShouldReturnNoContent() throws Exception {
-        mockMvc.perform(post("/api/film-production")
+        mockMvc.perform(post("/api/film-productions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filmProductionDTO)))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(delete("/api/film-production/{id}", 1))  // Replace '1' with the actual ID if needed
+        mockMvc.perform(delete("/api/film-productions/{id}", 1))  // Replace '1' with the actual ID if needed
                 .andExpect(status().isNoContent());
     }
 
     @Test
     void testSearchFilmProductionsShouldReturnOk() throws Exception {
-        mockMvc.perform(post("/api/film-production")
+        mockMvc.perform(post("/api/film-productions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filmProductionDTO)))
                 .andExpect(status().isCreated());
@@ -113,12 +113,12 @@ public class FilmProductionControllerTest {
         anotherFilmProduction.setDirector("Test Director");
         anotherFilmProduction.setBudget(16000.00);
 
-        mockMvc.perform(post("/api/film-production")
+        mockMvc.perform(post("/api/film-productions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(anotherFilmProduction)))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(get("/api/film-production/search-film")
+        mockMvc.perform(get("/api/film-productions/search")
                         .param("title", "New Test") // Set search parameters
                         .param("director", "Test Director")
                         .param("status", "Test")

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Validated
-@RequestMapping("/api/film-production")
+@RequestMapping("/api/film-productions")
 @RestController
 public class FilmProductionController {
 
@@ -21,37 +21,33 @@ public class FilmProductionController {
         this.filmProductionService = filmProductionService;
     }
 
-    @PostMapping("/api/film-production")
+    @PostMapping
     public ResponseEntity<FilmProductionDTO> createFilmProduction(@Valid @RequestBody FilmProductionDTO filmProductionDTO) {
-        FilmProductionDTO createdFilmProduction = filmProductionService.createFilmProduction(filmProductionDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdFilmProduction);
+        return ResponseEntity.status(HttpStatus.CREATED).body(filmProductionService.createFilmProduction(filmProductionDTO));
     }
 
-    @GetMapping("/api/film-production/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<FilmProductionDTO> getFilmProductionById(@PathVariable Long id) {
-        FilmProductionDTO filmProduction = filmProductionService.getFilmProductionById(id);
-        return ResponseEntity.ok(filmProduction);
+        return ResponseEntity.ok(filmProductionService.getFilmProductionById(id));
     }
 
-    @GetMapping("/api/film-production")
+    @GetMapping
     public ResponseEntity<List<FilmProductionDTO>> getAllFilmProductions() {
-        List<FilmProductionDTO> filmProductions = filmProductionService.getAllFilmProductions();
-        return ResponseEntity.ok(filmProductions);
+        return ResponseEntity.ok(filmProductionService.getAllFilmProductions());
     }
 
-    @PutMapping("/api/film-production/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<FilmProductionDTO> updateFilmProductionById(@PathVariable Long id,@Valid @RequestBody FilmProductionDTO filmProductionDTO) {
-        FilmProductionDTO updatedFilmProduction = filmProductionService.updateFilmProductionById(id, filmProductionDTO);
-        return ResponseEntity.ok(updatedFilmProduction);
+        return ResponseEntity.ok(filmProductionService.updateFilmProductionById(id, filmProductionDTO));
     }
 
-    @DeleteMapping("/api/film-production/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFilmProductionById(@PathVariable Long id) {
         filmProductionService.deleteFilmProductionById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/api/film-production/search-film")
+    @GetMapping("/search")
     public ResponseEntity<List<FilmProductionDTO>> searchFilmProductions(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "director", required = false) String director,
@@ -59,7 +55,6 @@ public class FilmProductionController {
             @RequestParam(value = "minBudget", required = false) Double minBudget,
             @RequestParam(value = "maxBudget", required = false) Double maxBudget) {
 
-        List<FilmProductionDTO> filmProductions = filmProductionService.findFilmProductionsByFilter(title, director, status, minBudget, maxBudget);
-        return ResponseEntity.ok(filmProductions);
+        return ResponseEntity.ok(filmProductionService.findFilmProductionsByFilter(title, director, status, minBudget, maxBudget));
     }
 }

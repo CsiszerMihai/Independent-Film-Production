@@ -4,10 +4,13 @@ import com.film_production.demo.models.dtos.ScheduleDTO;
 import com.film_production.demo.services.ScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
+@RequestMapping("/api/schedules")
 @RestController
 public class ScheduleController {
 
@@ -17,31 +20,27 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
-    @PostMapping("/api/schedules")
+    @PostMapping
     public ResponseEntity<ScheduleDTO> createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
-        ScheduleDTO createdSchedule = scheduleService.createSchedule(scheduleDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdSchedule);
+        return ResponseEntity.status(HttpStatus.CREATED).body(scheduleService.createSchedule(scheduleDTO));
     }
 
-    @GetMapping("/api/schedules/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ScheduleDTO> getScheduleById(@PathVariable Long id) {
-        ScheduleDTO schedule = scheduleService.getScheduleById(id);
-        return ResponseEntity.ok(schedule);
+        return ResponseEntity.ok(scheduleService.getScheduleById(id));
     }
 
-    @GetMapping("/api/schedules")
+    @GetMapping
     public ResponseEntity<List<ScheduleDTO>> getAllSchedules() {
-        List<ScheduleDTO> schedules = scheduleService.getAllSchedules();
-        return ResponseEntity.ok(schedules);
+        return ResponseEntity.ok(scheduleService.getAllSchedules());
     }
 
-    @PutMapping("/api/schedules/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ScheduleDTO> updateScheduleById(@PathVariable Long id, @RequestBody ScheduleDTO scheduleDTO) {
-        ScheduleDTO updatedSchedule = scheduleService.updateScheduleById(id, scheduleDTO);
-        return ResponseEntity.ok(updatedSchedule);
+        return ResponseEntity.ok(scheduleService.updateScheduleById(id, scheduleDTO));
     }
 
-    @DeleteMapping("/api/schedules/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteScheduleById(@PathVariable Long id) {
         scheduleService.deleteScheduleById(id);
         return ResponseEntity.noContent().build();
