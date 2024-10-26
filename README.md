@@ -65,27 +65,25 @@ Postman (for API testing)
 ## Porject Structure
 ```
 ├───src
-│   ├───main
-│   │   ├───java
-│   │   │   └───com
-│   │   │       └───film_production
-│   │   │           └───demo
-│   │   │               ├───controllers
-│   │   │               ├───exceptions
-│   │   │               ├───models
-│   │   │               │   ├───dtos
-│   │   │               │   └───entities
-│   │   │               ├───repositories
-│   │   │               ├───services
-│   │   │               └───specifications
-│   │   └───resources
-│   └───test
+   ├───main
+   │   ├───java/com/film_production/demo
+   │   │                  ├───controllers         #REST Controllers
+   │   │                  ├───exceptions          #Exception Handling
+   │   │                  ├───models               
+   │   │                  │   ├───dtos            #DTOs      
+   │   │                  │   └───entities        #Entities
+   │   │                  ├───repositories        #Data Repositories
+   │   │                  ├───services            #Service implementations
+   │   │                  └───specifications      #Filtering mechanism
+   │   └───resources
+   │       └───application.properties             #Configuration
+   └───test
         ├───java
             └───com
                 └───film_production
                     └───demo
-                        ├───integration_tests
-                        └───unit_tests
+                        ├───integration_tests     #Integration Tests
+                        └───unit_tests            #Unit Tests
 ```        
 
 
