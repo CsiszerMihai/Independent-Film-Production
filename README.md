@@ -4,23 +4,23 @@ The Independent Film Production System is a Spring Boot-based application design
 
 ## Table of Contents
 
-Tech Stack
+[Tech Stack](#tech-stack)
 
-Features
+[Features](#features)
 
-Project Structure
+[Project Structure](#project-structure)
 
-Installation
+[Installation](#installation)
 
-Running the Application
+[Running the Application](#running-the-application)
 
-API Endpoints
+[API Endpoints](#api-endpoints)
 
-Testing 
+[Testing](#testing) 
 
-Error Handling
+[Error Handling](#error-handling)
 
-Contributing
+[Contributing](#contributing)
 
 ## Tech Stack
 
