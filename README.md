@@ -63,7 +63,7 @@ Postman (for API testing)
 **Testing:** Comprehensive Intergration and Unit Testing for endpoints and services.
 
 ## Porject Structure
-
+```
 ├───src
 │   ├───main
 │   │   ├───java
@@ -86,7 +86,7 @@ Postman (for API testing)
                     └───demo
                         ├───integration_tests
                         └───unit_tests
-        
+```        
 
 
 ## Running The Application
