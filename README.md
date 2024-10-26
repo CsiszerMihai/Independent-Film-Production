@@ -65,29 +65,17 @@ Postman (for API testing)
 ## Porject Structure
 
 src/
-
 ├── main/
-
 │   ├── java/com/film_production/demo
-
 │   │   ├── controllers/        # REST Controllers
-
 │   │   ├── exceptions/         # Exception handling
-
 │   │   ├── models/             # DTOs and Entity classes
-
 │   │   ├── repositories/       # Data Repositories
-
 │   │   ├── services/           # Service implementations
-
 │   │   └── specifications/     # Filtering components
-
 │   └── resources/
-
 │       └── application.properties  # Configuration 
-
 └── test/java/com/film_production/demo
-
     ├── integration_tests/  #Integration Tests
     
     └── unit_tests/         #Unit Tests
